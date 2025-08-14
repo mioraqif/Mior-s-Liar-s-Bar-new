@@ -1,71 +1,43 @@
-// script.js
-const cards = ['Ace', 'King', 'Queen', 'Joker'];
-let deck = [];
-let players = [];
-let currentPlayer = 0;
-let playerHands = [];
-let selectedCards = [];
-const numPlayers = 2; // change for local multiplayer 2-6
-
-function initDeck() {
-    deck = [];
-    cards.forEach(card => {
-        for(let i=0;i<6;i++) deck.push(card);
-    });
-    shuffle(deck);
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f8ff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
-
-function shuffle(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-    }
+#game-container {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    width: 90%;
+    max-width: 800px;
 }
-
-function dealCards() {
-    playerHands = [];
-    for(let i=0;i<numPlayers;i++) {
-        playerHands.push(deck.splice(0,5));
-    }
+#player-hand, #table-area {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 15px 0;
 }
-
-function renderHand() {
-    const handDiv = document.getElementById('player-hand');
-    handDiv.innerHTML = '';
-    playerHands[currentPlayer].forEach((card,index)=>{
-        const cardDiv = document.createElement('div');
-        cardDiv.className = 'card';
-        cardDiv.textContent = card;
-        cardDiv.onclick = () => toggleSelect(card,index);
-        if(selectedCards.includes(index)) cardDiv.classList.add('selected');
-        handDiv.appendChild(cardDiv);
-    });
+.card {
+    width: 80px;
+    height: 120px;
+    margin: 5px;
+    border-radius: 10px;
+    background-color: #ffebcd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    cursor: pointer;
+    user-select: none;
 }
-
-function toggleSelect(card,index) {
-    const idx = selectedCards.indexOf(index);
-    if(idx>-1) selectedCards.splice(idx,1);
-    else selectedCards.push(index);
-    renderHand();
+.card.selected {
+    border: 3px solid #ff4500;
 }
-
-document.getElementById('play-button').onclick = () => {
-    if(selectedCards.length===0) return;
-    let played = [];
-    selectedCards.sort((a,b)=>b-a);
-    selectedCards.forEach(idx=>{
-        played.push(playerHands[currentPlayer][idx]);
-        playerHands[currentPlayer].splice(idx,1);
-    });
-    document.getElementById('table-area').innerHTML = 'Played: ' + played.join(', ');
-    selectedCards = [];
-    currentPlayer = (currentPlayer+1)%numPlayers;
-    renderHand();
-    document.getElementById('player-info').textContent = `Player ${currentPlayer+1}'s turn`;
+button {
+    padding: 10px 20px;
+    font-size: 1.1em;
+    border-radius: 10px;
+    cursor: pointer;
 }
-
-// initialize game
-initDeck();
-dealCards();
-document.getElementById('player-info').textContent = `Player ${currentPlayer+1}'s turn`;
-renderHand();
