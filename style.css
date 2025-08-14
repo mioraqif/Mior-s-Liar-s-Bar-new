@@ -1,0 +1,44 @@
+// style.css
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f8ff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+#game-container {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    width: 90%;
+    max-width: 800px;
+}
+#player-hand, #table-area {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 15px 0;
+}
+.card {
+    width: 80px;
+    height: 120px;
+    margin: 5px;
+    border-radius: 10px;
+    background-color: #ffebcd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    cursor: pointer;
+    user-select: none;
+}
+.card.selected {
+    border: 3px solid #ff4500;
+}
+button {
+    padding: 10px 20px;
+    font-size: 1.1em;
+    border-radius: 10px;
+    cursor: pointer;
+}
